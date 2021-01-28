@@ -10,6 +10,7 @@ def edit_entry(entry_id):
     entry = Entry.query.filter_by(id=entry_id).first_or_404()
     form = EntryForm(obj=entry)
     errors = None
+    title="Edytuj"
     if request.method == 'POST':
         if form.validate_on_submit():
             tackle_post(form, entry_id=entry_id, entry=entry)
@@ -18,13 +19,14 @@ def edit_entry(entry_id):
 
         return redirect(url_for("index"))
 
-    return render_template("entry_form.html", form=form, errors=errors)
+    return render_template("entry_form.html", form=form, title=title, errors=errors)
 
 
 @app.route("/new-post/", methods=["GET", "POST"])
 def create_entry():
     form = EntryForm()
     errors = None
+    title="Dodaj nowy"
     if request.method == 'POST':
         if form.validate_on_submit():
             tackle_post(form, entry_id=None, entry=None)
@@ -32,7 +34,7 @@ def create_entry():
             errors = form.errors
 
         return redirect(url_for("index"))
-    return render_template("entry_form.html", form=form, errors=errors)
+    return render_template("entry_form.html", form=form, title=title, errors=errors)
 
 
 @app.route('/')
