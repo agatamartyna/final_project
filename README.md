@@ -1,1 +1,2 @@
-# final_project
+# Blog app
+flake8
