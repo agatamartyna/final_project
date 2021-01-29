@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Data</th>
+        <th scope="col">Tytuł</th>
+        <th scope="col">Treść</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for draft in drafts %}
+        <tr>
+            <td>{{ draft.pub_date.strftime('%Y-%m-%d') }}</td>
+            <td><a href="/edit-post/{{draft.id}}">{{ draft.title }}</a></td>
+            <td>{{ draft.body|truncate(100, true) }}</td>
+            <td>
+                <form class="form-inline my-2 my-lg-0" action="/delete-post/{{draft.id}}" method="POST">
+                    <button class="btn btn-danger">Usuń</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
