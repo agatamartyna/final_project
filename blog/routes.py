@@ -88,16 +88,14 @@ def index():
 @login_required
 def delete_entry(draft_id):
     entry = Entry.query.filter_by(id=draft_id).first_or_404()
-    flag = 0
     if entry.is_published is True:
-        flag = 1
-    db.session.delete(entry)
-    db.session.commit()
-
-    if flag == 0:
-        return redirect(url_for("list_drafts"))
-    else:
+        db.session.delete(entry)
+        db.session.commit()
         return redirect(url_for("index"))
+    else:
+        db.session.delete(entry)
+        db.session.commit()
+        return redirect(url_for("list_drafts"))
 
 
 @app.route('/drafts/')
